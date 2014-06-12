@@ -18,10 +18,11 @@ type
     SaveFolder: TEdit;
     Label2: TLabel;
     Label3: TLabel;
-    Button1: TButton;
+    CencelButton: TButton;
     procedure DownloadButtonClick(Sender: TObject);
-    procedure Button1Click(Sender: TObject);
+    procedure CencelButtonClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure AlbumHTTPAdressEnter(Sender: TObject);
   private
     { Private declarations }
   public
@@ -46,7 +47,12 @@ implementation
 
 
 
-procedure TForm1.Button1Click(Sender: TObject);
+procedure TForm1.AlbumHTTPAdressEnter(Sender: TObject);
+begin
+  if AlbumHTTPAdress.SelText<>AlbumHTTPAdress.Text then AlbumHTTPAdress.SelectAll;
+end;
+
+procedure TForm1.CencelButtonClick(Sender: TObject);
 begin
   if not LoopThread.Terminated then
     if MessageDlg('Currently in progress. Are you want terminate downloading files?', mtConfirmation, [mbYes, mbNo], 0)=mrYes then
@@ -97,6 +103,7 @@ var
   FS:  TFileStream;
   LoopBreaked: Boolean;
 begin
+  Form1.CencelButton.Enabled:=True;
   if FileExists('data.tmp') then
   begin
     Assign(F, 'data.tmp');
@@ -112,12 +119,16 @@ begin
         sLine[8]:='i';
         Form1.FoundenPics.Items.Add(sLine);
         Form1.Label1.Caption:='Founded '+IntToStr(Form1.FoundenPics.Count)+' pictures!';
+        Form1.Refresh;
         ImgName:=RegEx2.Match(sLine).Value;
         if not FileExists(Form1.SaveFolder.Text+ImgName) then
         begin
-          FS:=TFileStream.Create(Form1.SaveFolder.Text+ImgName,fmCreate);
-          Form1.IdHTTP.Get(sLine,FS);
-          FS.Free;
+          try
+            FS:=TFileStream.Create(Form1.SaveFolder.Text+ImgName,fmCreate);
+            Form1.IdHTTP.Get(sLine,FS);
+          except
+            FS.Free;
+          end;
         end;
       end;
     end else
@@ -130,5 +141,6 @@ begin
   if LoopBreaked=False then
     MessageDlg('All images downloaded', mtInformation, [mbOK], 0);
   CloseFile(F);
-  end;
+  Form1.CencelButton.Enabled:=False;
+end;
 end.

@@ -43,7 +43,7 @@ object Form1: TForm1
     Width = 75
     Height = 25
     Caption = 'Download'
-    TabOrder = 0
+    TabOrder = 4
     OnClick = DownloadButtonClick
   end
   object AlbumHTTPAdress: TEdit
@@ -51,8 +51,8 @@ object Form1: TForm1
     Top = 8
     Width = 378
     Height = 21
-    TabOrder = 1
-    Text = 'http://imgchili.net/album/fa88732b77176dd2e72327476f95e0df'
+    TabOrder = 0
+    OnEnter = AlbumHTTPAdressEnter
   end
   object FoundenPics: TListBox
     Left = 8
@@ -67,22 +67,25 @@ object Form1: TForm1
     Top = 44
     Width = 378
     Height = 21
-    TabOrder = 3
+    TabOrder = 1
     Text = 'D:\Downloads\imgchili.net\'
   end
-  object Button1: TButton
+  object CencelButton: TButton
     Left = 325
     Top = 299
     Width = 75
     Height = 25
     Caption = 'Cencel'
-    TabOrder = 4
-    OnClick = Button1Click
+    Enabled = False
+    TabOrder = 3
+    OnClick = CencelButtonClick
   end
   object IdHTTP: TIdHTTP
     AllowCookies = True
+    HandleRedirects = True
     ProxyParams.BasicAuthentication = False
     ProxyParams.ProxyPort = 0
+    Request.Connection = 'keep-alive'
     Request.ContentLength = -1
     Request.ContentRangeEnd = -1
     Request.ContentRangeStart = -1
