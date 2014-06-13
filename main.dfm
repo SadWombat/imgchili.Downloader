@@ -3,7 +3,7 @@ object Form1: TForm1
   Top = 0
   BorderStyle = bsDialog
   Caption = 'imgchili.Downloader'
-  ClientHeight = 333
+  ClientHeight = 324
   ClientWidth = 488
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -14,6 +14,7 @@ object Form1: TForm1
   OldCreateOrder = False
   Position = poDesktopCenter
   OnClose = FormClose
+  OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
   object Label1: TLabel
@@ -39,7 +40,7 @@ object Form1: TForm1
   end
   object DownloadButton: TButton
     Left = 406
-    Top = 299
+    Top = 291
     Width = 75
     Height = 25
     Caption = 'Download'
@@ -52,12 +53,13 @@ object Form1: TForm1
     Width = 378
     Height = 21
     TabOrder = 0
-    OnEnter = AlbumHTTPAdressEnter
+    OnClick = AlbumHTTPAdressClick
+    OnKeyPress = AlbumHTTPAdressKeyPress
   end
   object FoundenPics: TListBox
     Left = 8
     Top = 98
-    Width = 473
+    Width = 472
     Height = 187
     ItemHeight = 13
     TabOrder = 2
@@ -65,20 +67,39 @@ object Form1: TForm1
   object SaveFolder: TEdit
     Left = 103
     Top = 44
-    Width = 378
+    Width = 297
     Height = 21
     TabOrder = 1
     Text = 'D:\Downloads\imgchili.net\'
+    OnKeyPress = AlbumHTTPAdressKeyPress
   end
   object CencelButton: TButton
     Left = 325
-    Top = 299
+    Top = 291
     Width = 75
     Height = 25
     Caption = 'Cencel'
     Enabled = False
     TabOrder = 3
     OnClick = CencelButtonClick
+  end
+  object Button1: TButton
+    Left = 406
+    Top = 42
+    Width = 75
+    Height = 25
+    Caption = 'Browse'
+    TabOrder = 5
+    OnClick = Button1Click
+  end
+  object Button2: TButton
+    Left = 244
+    Top = 291
+    Width = 75
+    Height = 25
+    Caption = 'Close'
+    TabOrder = 6
+    OnClick = Button2Click
   end
   object IdHTTP: TIdHTTP
     AllowCookies = True
